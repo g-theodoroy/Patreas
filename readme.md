@@ -11,9 +11,9 @@
 - Μ = Συντελεστής απόστασης, με τιμή 25 για τις ιστιοδρομίες Ελεγχόμενου Στίβου, το δε μήκος της ιστιοδρομίας σε ναυτικά μίλια στρογγυλοποιημένο στον πλησιέστερο ακέραιο για τις ιστιοδρομίες Ελεύθερης Πλεύσης
 - B = Συντελεστής βαρύτητας, όπου για λόγους απλότητας θα ισούται με 1.00 
 
-#### Based on sindresorhus/electron-boilerplate
-# app [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-
+## Ευχαριστίες
+ Based on [sindresorhus/electron-boilerplate](https://github.com/sindresorhus/electron-boilerplate)
+ 
 
 ## Dev
 
