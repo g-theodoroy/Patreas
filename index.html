@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Κύπελο Πατρέας</title>
+		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.min.css">
+		<style>
+		input.form-fixer {
+    padding: 1px;
+    }
+		.table tbody>tr>td.vert-align
+		{
+    vertical-align: middle;
+		}
+		.table tbody>tr>th.vert-align
+		{
+    vertical-align: middle;
+		}
+		.drop{
+			color:red;
+			text-decoration:line-through;
+		}
+		.transparent-input
+		{
+			background: transparent;
+		}
+		.bg-grey
+		{
+			background-color: #f5f5f5;
+		}
+
+		</style>
+		</head>
+	<body onload="window.patreas.getKatList()">
+
+		<div class="container-fluid">
+		    <div class="row">
+		        <div class="col-lg-12 col-md-12 col-sm-12 col-md-offset-0 col-sm-offset-0">
+		           <div class="panel panel-default">
+
+		                <div class="panel-heading h1 text-center">Κύπελο Πατρέας</div>
+										<div class="panel-body ">
+											<div class="row"><div class="form-conttrol-staticcol-lg-12 col-md-12 col-sm-12 h4 text-center ">s<b title="score C = Βαθμοί ιστιοδρομίας">C</b>ore = sqrt(<b title="S = Πλήθος κανονικώς εκκινησάντων σκαφών">S</b>*<b title="Μ = Συντελεστής απόστασης σε Nm">M</b>/(<b title="R = Θέση τερματισμού του σκάφους">R</b>+2)) * 100 * <b title="B = Συντελεστής βαρύτητας">B</b></div></div>
+
+								<ul class="nav nav-tabs">
+								  <li class="active"><a data-toggle="tab" onclick="javascript:window.patreas.getKatList()" href="#categories">Κατηγορίες</a></li>
+									<li><a data-toggle="tab" href="#yachts" onclick="javascript:window.patreas.getyachtList()">Σκάφη</a></li>
+								  <li><a data-toggle="tab" href="#races" onclick="javascript:window.patreas.getistList()">Ιστιοδρομίες</a></li>
+								  <li><a data-toggle="tab" href="#data" onclick="javascript:window.patreas.getdataList()">Δεδομένα</a></li>
+									<li><a data-toggle="tab" href="#results"  onclick="javascript:window.patreas.getResults()">Κατάταξη</a></li>
+									<li><a data-toggle="tab" href="#orcsc" >Αρχεία ORC SCorer</a></li>
+									<li><a data-toggle="tab" href="#peri"  onclick="javascript:window.patreas.getResults()">Περί...</a></li>
+								</ul>
+
+								<div class="tab-content">
+
+								  <div id="categories" class="tab-pane fade in active">
+
+									  <div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										  <div class="panel-body ">
+											  <div class="row bg-info">
+								    			<h3 class="text-center">Κατηγορίες πιστοποιητικών</h3>
+								    		</div>
+											<div class="row">
+												<div class="form-control-static col-md-4 col-sm-4 col-xs-4 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 h3">Κατηγορία</div>
+												<div class="form-control-static col-md-3 col-sm-3 h3">Κωδικός</div>
+										  </div>
+
+											<div id="kat-list" ></div>
+
+											<div class="row">
+												<div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 ">
+													<input id="katigoria" type="text" class="form-control" name="katigoria"  placeholder="Κατηγορία" value="">
+												</div>
+												<div class="col-md-3 col-sm-3 col-xs-3 ">
+													<input id="kat" type="text" class="form-control" name="kat"  placeholder="Κωδικός" maxlength="5" value="">
+													<input id="katid" type="hidden" class="form-control" name="katid"  placeholder="katid" value="">
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-2 text-center">
+													<a href="javascript:window.patreas.katsave();" class="form-control-static" role="button" title="Αποθήκευση" > <img src="images/save.ico" height="30" /></a>
+													<a href="javascript:window.patreas.katclear();" class="form-control-static" role="button" title="Καθάρισμα" > <img src="images/clear.ico" height="30" /></a>
+												</div>
+										  	</div>
+
+										</div>
+									</div>
+
+								  </div>
+
+								  <div id="races" class="tab-pane fade">
+
+										<div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										  <div class="panel-body ">
+												<div class="row bg-warning">
+								    			<h3 class="text-center">Ιστιοδρομίες</h3>
+								    		</div>
+
+												<div class="row">
+									        <div class="form-control-static  col-md-5 col-sm-5 col-xs-5 text-right h4">Υπολόγισε στις Ιστιοδρομίες Ελεγχόμενου Στίβου</div>
+									        <div class="col-md-2 col-sm-2 col-xs-2 h4">
+									          <input id="nm_eleghomenes" type="text" class="form-control text-center" name="nm_eleghomenes"  placeholder="Nm" value="">
+									        </div>
+									        <div class="form-control-static col-md-3 col-sm-3 col-xs-3 text-left h4"> Ναυτικά Μίλια</div>
+									        <div class="col-md-2 col-sm-2 col-xs-2 text-center h4">
+									          <a href="javascript:window.patreas.nm_eleghomenessave();" class="form-control-static" role="button" title="Αποθήκευση" > <img src="images/save.ico" height="25" /></a>
+									        </div>
+												</div>
+
+
+
+											<div class="row">
+												<div class="form-control-static col-md-3 col-sm-3 col-xs-3 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 h3">Ιστιοδρομία</div>
+												<div class="form-control-static col-md-2 col-sm-2 col-xs-2 h3">Κωδικός</div>
+												<div class="form-control-static col-md-1 col-sm-1 col-xs-1 h3 text-center" title="Ναυτικά Μίλια">Nm</div>
+												<div class="form-control-static col-md-1 col-sm-1 col-xs-1 h3 text-center" title="Συντελεστής Βαρύτητας">Συντ</div>
+												<div class="form-control-static col-md-1 col-sm-1 col-xs-1 h3 text-center" title="Κατηγορία">Κατ</div>
+												<div class="form-control-static col-md-1 col-sm-1 col-xs-1 h3 text-center" title="Ελεγχόμενου Στίβου">Ελ.Στ</div>
+										  </div>
+
+											<div id="ist-list" ></div>
+
+											<div class="row">
+												<div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+													<input id="istiodromia" type="text" class="form-control" name="istiodromia"  placeholder="Ιστιοδρομία" value="">
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-2 ">
+													<input id="ist" type="text" class="form-control" name="ist"  placeholder="Κωδικός" value="">
+													<input id="istid" type="hidden" class="form-control" name="istid"  placeholder="istid" value="">
+												</div>
+												<div class="col-md-1 col-sm-1 col-xs-1 ">
+													<input id="nm" type="text" class="form-control text-center form-fixer" name="nm"  placeholder="M" value="">
+												</div>
+												<div class="col-md-1 col-sm-1 col-xs-1 ">
+													<input id="baritita" type="text" class="form-control text-center form-fixer" name="baritita"  placeholder="B" value="">
+												</div>
+												<div id="istkatdiv" class="col-md-2 col-sm-2 col-xs-2 ">
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-2 text-center">
+													<a href="javascript:window.patreas.istsave();" class="form-control-static" role="button" title="Αποθήκευση" > <img src="images/save.ico" height="30" /></a>
+													<a href="javascript:window.patreas.istclear();" class="form-control-static" role="button" title="Καθάρισμα" > <img src="images/clear.ico" height="30" /></a>
+												</div>
+										  	</div>
+
+										</div>
+									</div>
+
+								  </div>
+
+								  <div id="yachts" class="tab-pane fade">
+
+										<div class="panel panel-default col-lg-12 col-md-12 col-lg-12 col-md-12 col-sm-12  ">
+										  <div class="panel-body ">
+											  <div class="row bg-success">
+								    			<h3 class="text-center">Σκάφη</h3>
+								    		</div>
+											<div class="row">
+												<div class="form-control-static col-md-2 col-sm-2 col-xs-2  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 h3">Αρ.Πανιών</div>
+												<div class="form-control-static col-md-4 col-sm-4 col-xs-4 h3">Σκάφος</div>
+												<div class="form-control-static col-md-2 col-sm-2 col-xs-2 h3">Κατηγορία</div>
+										  </div>
+
+											<div id="yacht-list" ></div>
+
+											<div class="row">
+												<div class="col-md-2 col-sm-2 col-xs-2  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">
+													<input id="sailnum" type="text" class="form-control" name="sailnum"  placeholder="Αρ.Πανιών" value="">
+													<input id="yachtid" type="hidden" class="form-control" name="yachtid"  placeholder="istid" value="">
+												</div>
+												<div class="col-md-4 col-sm-4 col-xs-4">
+													<input id="yacht" type="text" class="form-control" name="yacht"  placeholder="Σκάφος" value="">
+												</div>
+												<div id="yachtkatdiv" class="col-md-2 col-sm-2 col-xs-2 ">
+
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-2 text-center">
+													<a href="javascript:window.patreas.yachtsave();" class="form-control-static" role="button" title="Αποθήκευση" > <img src="images/save.ico" height="30" /></a>
+													<a href="javascript:window.patreas.yachtclear();" class="form-control-static" role="button" title="Καθάρισμα" > <img src="images/clear.ico" height="30" /></a>
+												</div>
+										  	</div>
+
+										</div>
+									</div>
+
+								  </div>
+
+
+								<div id="peri" class="tab-pane fade">
+
+									<div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										<div class="panel-body ">
+											<div class="row bg-success">
+												<h3 class="text-center">Οδηγίες - Πληροφορίες</h3>
+											</div>
+										<div class="row">
+											<div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 ">
+												<div class="form-control-static text-center h4 bg-info">Οδηγίες</div>
+												<ul class="list-unstyled">
+												  <li>Καταχωρίστε Κατηγορίες, Σκάφη, Ιστιοδρομίες.</li>
+													<li>Καταχωρίστε τα Δεδομένα.</li>
+												  <li>Δείτε, εκτυπώστε την Κατάταξη.</li>
+												</ul>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">
+												<div class="form-control-static text-center h4 bg-warning">Πληροφορίες</div>
+		    								<dl class="dl-horizontal">
+			        						<dt>S =</dt>
+			        						<dd>Πλήθος κανονικώς εκκινησάντων σκαφών. Καταμετρώνται τα σκάφη με αριθμητικό αποτέλεσμα ή με χαρακτηρισμό DSQ, BFD, DNE, DGM, DNF, RET. Εξαιρουνται τα DNC, DNS, OCS.</dd>
+													<dt>Μ =</dt>
+			        						<dd>Συντελεστής απόστασης. Στρογγυλοποιείται στον πλησιέστερο ακέραιο.</dd>
+													<dt>R =</dt>
+			        						<dd>θέση τερματισμού του σκάφους.</dd>
+													<dt>B =</dt>
+			        						<dd>Συντελεστής βαρύτητας ιστιοδρομίας.</dd>
+			        						<dt>score C =</dt>
+													<dd>Σκάφη που δήλωσαν συμμετοχή αλλά δεν ήρθαν στην εκκίνηση (DNC), ή δεν εκκίνησαν (DNS), ή ακυρώθηκαν (DSQ, OCS, BFD, DNE, DGM) βαθμολογούνται με μηδέν (0) βαθμούς.</dd>
+													<dd>Σκάφη που δεν τερμάτισαν (DNF) ή αποσύρθηκαν από την ιστιοδρομία (RET) βαθμολογούνται με το 10% των βαθμών του τελευταίου σκάφους.</dd>
+													<dd>Για όλα τα υπόλοιπα σκάφη χρησιμοποιείται ο τύπος. Η βαθμολογία κάθε σκάφους στρογγυλοποιείται στον πλησιέστερο ακέραιο.</dd>
+													<dt>DNE</dt>
+													<dd>Στην περίπτωση που ένα σκάφος έχει βαθμολογηθεί σε μία ιστιοδρομία DNE, αυτή η ιστιοδρομία δεν εξαιρείται από τον υπολογισμό της κατάταξης.</dd>
+		  									</dl>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 ">
+												<div class="text-right h4"><a href="mailto:g.theodoroy@gmail.com?subject=Κύπελο Πατρέας" target="_top">GΘ@2017</a></div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								</div>
+
+
+							  <div id="results" class="tab-pane fade">
+
+									<div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										<div class="panel-body ">
+											<div class="row bg-primary">
+												<h3 class="text-center">Κατάταξη</h3>
+											</div>
+											<div class="row">
+						          	<div class="form-control-static col-md-12 col-sm-12 col-xs-12 h2 text-center">
+						          		<a href="javascript:window.patreas.printresults('results.html')" class="form-control-static" role="button" title="Εκτύπωση" > <img src="images/print.png" height="30" /></a>
+						          	</div>
+											</div>
+											<div class="row">
+												<div id="results-list"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+											</div>
+										<div class="row">
+					          	<div class="form-control-static col-md-12 col-sm-12 col-xs-12 h2 text-center">
+					          		<a href="javascript:window.patreas.printresults('results.html')" class="form-control-static" role="button" title="Εκτύπωση" > <img src="images/print.png" height="30" /></a>
+					          	</div>
+										</div>
+
+									</div>
+								</div>
+
+							  </div>
+
+
+								<div id="data" class="tab-pane fade">
+
+									<div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										<div class="panel-body ">
+											<div class="row bg-danger">
+												<h3 class="text-center">Καταχώριση Δεδομένων</h3>
+											</div>
+											<div class="row">
+										<div id="data-list" class="table-responsive"></div>
+
+									</div>
+								</div>
+								</div>
+
+								</div>
+
+
+								<div id="orcsc" class="tab-pane fade">
+
+									<div class="panel panel-default col-lg-12 col-md-12 col-sm-12  ">
+										<div class="panel-body ">
+
+											<div class="row bg-grey">
+												<h3 class="text-center">Εισαγωγή δεδομένων από αρχεία αγώνων "ORC SCorer"</h3>
+											</div>
+
+											<div class="row">
+												<h4 class="text-center">Επιλογή φακέλου με αρχεία αγώνων "ORC SCorer"</h3>
+											</div>
+
+											<div class="row">
+												<div class="col-md-12 col-sm-12 form-control-static fileinput fileinput-new text-center" data-provides="fileinput">
+								            <span class="btn btn-default btn-file"><span class="fileinput-new">
+								                <img src="images/find.ico" height=20 />
+								            </span>
+								            <span class="fileinput-exists"><img src="images/edit.ico" height=20 /></span>
+								            <input id="seldir" type="file" name="seldir" webkitdirectory onchange="window.patreas.getOrcScFiles(this.files[0].path)"></span>
+								            <span class="fileinput-filename"></span>
+								            <a href="#" id="filereset" class="close fileinput-exists" data-dismiss="fileinput" style="float: none" title="Διαγραφή"><img src="images/delete.ico" height=20 /></a>
+								        </div>
+											</div>
+
+											<div class="row">
+												<div id="orcscfiles"></div>
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+
+
+
+
+							</div>
+
+		                </div>
+
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+	</body>
+	<script>window.jQuery = require('jquery')</script>
+	<script>window.bootstrap = require('bootstrap')</script>
+	<script>window.patreas = require('./patreas.js')</script>
+	<script src="fileinput.js"></script>
+
+</html>
