@@ -1012,7 +1012,7 @@ function resultslistdata (callback) {
           countDNE4yacht[idxyacht] = 0
           itemyacht.istiodromies.forEach(function (itemistiodromia) {
             idxist = objist.istiodromies.istiodromia.findIndex(x => x.id == itemistiodromia.istid[0]) // eslint-disable-line eqeqeq
-            if (parseInt(itemistiodromia.position)) {
+            if (parseFloat(itemistiodromia.position)) {
               var ekinisan = yachtnuminist[idxist]
               var nm = Math.round(objist.istiodromies.istiodromia[idxist].nm)
               if (objist.istiodromies.istiodromia[idxist].eleghomenosStivos) {
@@ -1022,7 +1022,8 @@ function resultslistdata (callback) {
               }
               var position = itemistiodromia.position
               var baritita = objist.istiodromies.istiodromia[idxist].baritita
-              var score = Math.round(Math.sqrt(ekinisan * nm / (parseInt(position) + 2)) * 100 * baritita)
+              var score = Math.round(Math.sqrt(ekinisan * nm / (parseFloat(position) + 2)) * 100 * baritita)
+              //alert(itemyacht.onoma + " " + position + " " + Math.round(Math.sqrt(ekinisan * nm / (parseInt(position) + 2)) * 100 * baritita) + " - " + score)
               itemistiodromia.score = score
             }
             if (itemistiodromia.position == 'DNE') { // eslint-disable-line eqeqeq
