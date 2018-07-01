@@ -1404,7 +1404,9 @@ exports.insertOrcscFiles = function insertOrcscFiles (dir) {
           objorcsc.event.Fleet[0].ROW.forEach(function (ROW) {
             var idxyacht = objyacht.yachts.yacht.findIndex(x => x.id === ROW.SailNo[0])
             if (idxyacht == -1) { // eslint-disable-line eqeqeq
-              objyacht.yachts.yacht.push({'id': ROW.SailNo[0], 'onoma': ROW.YachtName[0], 'yachtkat': ROW.ClassId[0].replace(/ /g, '_'), 'istiodromies': []})
+				if (ROW.SailNo[0] && ROW.YachtName[0] && ROW.ClassId[0]){
+              		objyacht.yachts.yacht.push({'id': ROW.SailNo[0], 'onoma': ROW.YachtName[0], 'yachtkat': ROW.ClassId[0].replace(/ /g, '_'), 'istiodromies': []})
+				}
             }
           })
           objorcsc.event.Race[0].ROW.sort(
